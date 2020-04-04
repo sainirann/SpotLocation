@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="3dp"
+    android:layout_marginBottom="1dp"
+    android:background="@drawable/recycler_design"
+    android:id="@+id/parent_view">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="80dp"
+        android:textAlignment="center"
+        android:id="@+id/address_already_looked_up"
+        android:fontFamily="@font/adamina"
+        android:textColor="@color/color_background"
+        android:textSize="20sp"/>
+
+</LinearLayout>

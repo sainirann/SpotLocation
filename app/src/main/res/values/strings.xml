@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">LocateSpot</string>
+    <string name="try_again">Try Again</string>
+    <string name="not_found">Oops!!!! \n Location Not Found</string>
+    <string name="try_agin_text">Would you like to try again?</string>
+</resources>
