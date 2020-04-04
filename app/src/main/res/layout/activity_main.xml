@@ -27,6 +27,7 @@
                     android:ems="10"
                     android:paddingStart="10dp"
                     android:paddingEnd="40dp"
+                    android:layout_margin="5dp"
                     android:paddingTop="10dp"
                     android:paddingBottom="10dp"
                     android:fontFamily="@font/adamina"
@@ -47,6 +48,7 @@
             android:id="@+id/looked_up_address"
             android:layout_width="match_parent"
             android:layout_weight="2"
+            android:layout_margin="5dp"
             android:background="@drawable/address_box_design"
             android:layout_height="match_parent"/>
     </LinearLayout>
