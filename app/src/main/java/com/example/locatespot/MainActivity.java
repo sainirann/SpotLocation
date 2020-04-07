@@ -22,6 +22,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ZoomControls;
 
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -54,6 +55,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private Set<String> alreadyAvailableAddressLookUp;
     private RecyclerViewAdapter recyclerViewAdapter;
     private AlertDialog invalidAddressAlert;
+    private ZoomControls zoomControls;
 
 
     @Override
@@ -65,6 +67,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         recyclerView.setVisibility(View.GONE);
         alreadyAvailableAddress = new ArrayList<>();
         alreadyAvailableAddressLookUp = new HashSet<>();
+        zoomControls = findViewById(R.id.zoom_control);
+
 
         if (isUserPermissionAvailable()) {
             LocationManager locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
@@ -82,6 +86,18 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION}, permissionCode);
         }
+        zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.animateCamera(CameraUpdateFactory.zoomIn());
+            }
+        });
+        zoomControls.setOnZoomOutClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.animateCamera(CameraUpdateFactory.zoomOut());
+            }
+        });
     }
 
     private boolean isUserPermissionAvailable() {
@@ -112,6 +128,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         map = googleMap;
+        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
         recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), alreadyAvailableAddress, map);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
