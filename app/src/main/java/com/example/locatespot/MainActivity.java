@@ -11,6 +11,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Resources;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -18,6 +19,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Looper;
 import android.provider.Settings;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -33,7 +35,9 @@ import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MapStyleOptions;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -50,12 +54,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     private FusedLocationProviderClient locationClient;
     private EditText addr;
     private GoogleMap map;
+    private static final String TAG = MainActivity.class.getSimpleName();
     private RecyclerView recyclerView;
     private List<RetrieveLocation> alreadyAvailableAddress;
     private Set<String> alreadyAvailableAddressLookUp;
     private RecyclerViewAdapter recyclerViewAdapter;
     private AlertDialog invalidAddressAlert;
-    private ZoomControls zoomControls;
 
 
     @Override
@@ -67,7 +71,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         recyclerView.setVisibility(View.GONE);
         alreadyAvailableAddress = new ArrayList<>();
         alreadyAvailableAddressLookUp = new HashSet<>();
-        zoomControls = findViewById(R.id.zoom_control);
+
 
 
         if (isUserPermissionAvailable()) {
@@ -86,18 +90,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION,
                     Manifest.permission.ACCESS_FINE_LOCATION}, permissionCode);
         }
-        zoomControls.setOnZoomInClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                map.animateCamera(CameraUpdateFactory.zoomIn());
-            }
-        });
-        zoomControls.setOnZoomOutClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                map.animateCamera(CameraUpdateFactory.zoomOut());
-            }
-        });
+
     }
 
     private boolean isUserPermissionAvailable() {
@@ -128,7 +121,19 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     @Override
     public void onMapReady(final GoogleMap googleMap) {
         map = googleMap;
-        map.setMapType(GoogleMap.MAP_TYPE_HYBRID);
+        map.setMyLocationEnabled(true);
+        UiSettings uiToolFeatures = map.getUiSettings();
+        uiToolFeatures.setZoomControlsEnabled(true);
+        uiToolFeatures.setMapToolbarEnabled(true);
+        uiToolFeatures.setMapToolbarEnabled(true);
+        try {
+            boolean result = map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_design));
+            if (!result) {
+                Log.e(TAG, "Style parsing failed.");
+            }
+        } catch (Resources.NotFoundException e) {
+            Log.e(TAG, "Can't find style. Error: ", e);
+        }
         recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), alreadyAvailableAddress, map);
         recyclerView.setAdapter(recyclerViewAdapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

@@ -5,6 +5,9 @@
     <color name="colorAccent">#D81B60</color>
     <color name="textBoxColor">#ffffff</color>
     <color name="borderColor">#000000</color>
-    <color name="textBoxBackground">#E3E4E6</color>
-    <color name="color_background">#EE1A50</color>
+    <color name="textBoxBackground">#FFFAFA</color>
+    <color name="text_color_alertbox">#EE1A50</color>
+    <color name="text_color_recyclerview">#1205AF</color>
+    <color name="background_color_of_layout">#FDE6E5E5</color>
+    <color name="data_adapter_background">#F8E4BC</color>
 </resources>

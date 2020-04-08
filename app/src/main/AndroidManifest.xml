@@ -18,7 +18,7 @@
         <meta-data android:name="com.google.android.geo.API_KEY"
             android:value="@string/map_key"/>
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" android:configChanges="screenSize|orientation|screenLayout">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
