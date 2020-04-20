@@ -70,6 +70,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         recyclerView = findViewById(R.id.looked_up_address);
         recyclerView.setVisibility(View.GONE);
         alreadyAvailableAddress = new ArrayList<>();
+        Log.d(TAG, "In OnCreate");
         alreadyAvailableAddressLookUp = new HashSet<>();
 
 
@@ -125,7 +126,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         UiSettings uiToolFeatures = map.getUiSettings();
         uiToolFeatures.setZoomControlsEnabled(true);
         uiToolFeatures.setMapToolbarEnabled(true);
-        uiToolFeatures.setMapToolbarEnabled(true);
+        uiToolFeatures.setZoomGesturesEnabled(true);
+        uiToolFeatures.setTiltGesturesEnabled(true);
+        uiToolFeatures.setRotateGesturesEnabled(true);
         try {
             boolean result = map.setMapStyle(MapStyleOptions.loadRawResourceStyle(this, R.raw.map_design));
             if (!result) {
