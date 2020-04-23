@@ -1,3 +1,7 @@
+/*
+ *  Work done by Saishree Jayakumar (026617056)
+ */
+
 package com.example.locatespot;
 
 import android.content.Context;
@@ -18,6 +22,9 @@ import com.google.android.gms.maps.model.MarkerOptions;
 
 import java.util.List;
 
+/**
+ * Adapter for recycler view to show address in the recycler view
+ */
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
 
   private Context context;
@@ -57,6 +64,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     return locationAddress.size();
   }
 
+  /**
+   * View holder for holding the recycler view items
+   */
   static class ViewHolder extends RecyclerView.ViewHolder {
 
     private TextView addressAlreadyLookedUp;

@@ -1,3 +1,7 @@
+/*
+ *  Work done by Saishree Jayakumar (026617056)
+ */
+
 package com.example.locatespot;
 
 import android.Manifest;
@@ -91,6 +95,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
   }
 
+  /**
+   * Checks for the user permission for accessing location
+   * @return true if permission is granted otherwise false
+   */
+
   private boolean isUserPermissionAvailable() {
     if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) ||
         (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED)) {
@@ -98,6 +107,13 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
     return true;
   }
+
+  /**
+   * Request for user permission
+   * @param requestCode Request Code
+   * @param permissions Permissions needed
+   * @param grantResults Grant results
+   */
 
   @Override
   public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -110,6 +126,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
   }
+
+  /**
+   * Get the address of the location
+   * @param view Address view
+   */
 
   public void findAddress(View view) {
     addr = findViewById(R.id.address);
@@ -137,6 +158,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     recyclerViewAdapter = new RecyclerViewAdapter(getApplicationContext(), alreadyAvailableAddress, map);
     recyclerView.setAdapter(recyclerViewAdapter);
     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+
+    // Get the current location of the user
     locationClient.getLastLocation().addOnCompleteListener(
         new OnCompleteListener<Location>() {
           @Override
@@ -167,12 +190,24 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     );
   }
 
+  /**
+   * Show the location in marker
+   * @param latitude latitude
+   * @param longitude longitude
+   * @param loc Location
+   */
+
   private void setCurrentLocation(double latitude, double longitude, String loc) {
     map.clear();
     LatLng currentLocation = new LatLng(latitude, longitude);
     map.addMarker(new MarkerOptions().position(currentLocation).title(loc == null ? "Your Location" : loc));
     map.animateCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16), 3500, null);
   }
+
+  /**
+   * With provided address, it finds the latitude, longitude ({@link Address}) of the location
+   * @param addressVal
+   */
 
   private void findAddress(String addressVal) {
     Geocoder gc = new Geocoder(this);
@@ -215,7 +250,11 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     }
   }
 
-
+  /**
+   * Retrieve the address from the {@link Address}
+   * @param address
+   * @return address of the location
+   */
   private String getAddressLines(Address address) {
     StringBuilder sb = new StringBuilder();
     for (int i = 0; i <= address.getMaxAddressLineIndex(); i++) {

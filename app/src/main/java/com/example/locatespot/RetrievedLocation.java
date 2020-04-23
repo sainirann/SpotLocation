@@ -1,7 +1,15 @@
+/*
+ *  Work done by Saishree Jayakumar (026617056)
+ */
+
 package com.example.locatespot;
 
 import android.location.Address;
 
+/**
+ * Class for the Retrieved Location, which is the string address
+ * user entered and {@link Address}
+ */
 public class RetrievedLocation {
     Address address;
     String completeAddress;
