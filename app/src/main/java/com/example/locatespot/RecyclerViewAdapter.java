@@ -1,7 +1,3 @@
-/*
- *  Work done by Saishree Jayakumar (026617056)
- */
-
 package com.example.locatespot;
 
 import android.content.Context;
